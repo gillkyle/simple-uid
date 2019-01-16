@@ -31,6 +31,7 @@ class BaseXConverter(object):
         Converts value from base 10 to base X.
         The return value is a baseX integer, wrapped as a string.
         '''
+        bXval = 0
         return bXval
 
     def invert(self, bXval):
@@ -39,4 +40,5 @@ class BaseXConverter(object):
         The bXval should be a baseX integer, wrapped as a string.
         Raises a ValueError if bXval contains any chars not in the alphabet.
         '''
+        val = 0
         return val

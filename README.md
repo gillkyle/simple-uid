@@ -4,32 +4,32 @@ As the team lead for a new corporate system, you've decided the standard UUID (u
 
 As a unique ID, the UID must be unique in both space and time to allow any computer to create unique IDs in soluation -- without having to verify uniqueness with any other ocmputer. To this purpose, you'll assign the 63 bits as follows:
 
-|                | Time Component                 | Time Component                            | Space Component                                                            |
-|----------------|--------------------------------|-------------------------------------------|----------------------------------------------------------------------------|
-| Number of Bits | 42 bits                        | 13 bits                                   | 8 bits                                                                     |
-| Description    | Milliseconds since Jan, 1970   | Counter (allows more than one UID per ms) | Shard ID (assigned explicitly to a server, process, or database)           |
-| Maximum Value  | 4,398,046,511,104 (May, 2109)  | 8,192 per ms                              | 256 unique locations                                                       |
+|                | Time Component                | Time Component                            | Space Component                                                  |
+| -------------- | ----------------------------- | ----------------------------------------- | ---------------------------------------------------------------- |
+| Number of Bits | 42 bits                       | 13 bits                                   | 8 bits                                                           |
+| Description    | Milliseconds since Jan, 1970  | Counter (allows more than one UID per ms) | Shard ID (assigned explicitly to a server, process, or database) |
+| Maximum Value  | 4,398,046,511,104 (May, 2109) | 8,192 per ms                              | 256 unique locations                                             |
 
-* *millis*: 42 bits gives us 4,398,046,511,104 milliseconds, or 139 years after the Unix epoch time of January 1, 1970: `(2^42) - 1 + 1970 == 4,398,046,511,104 ms + 1970 == May, 2109`. Milliseconds is the first component so these ids automatically sort by time.
-* counter: 13 bits gives us 8,192 possible ids per millisecond per shard.
-* shard id: 8 bits gives us 256 possible shards, which represent unique database instances, web server instances, etc.
+- _millis_: 42 bits gives us 4,398,046,511,104 milliseconds, or 139 years after the Unix epoch time of January 1, 1970: `(2^42) - 1 + 1970 == 4,398,046,511,104 ms + 1970 == May, 2109`. Milliseconds is the first component so these ids automatically sort by time.
+- counter: 13 bits gives us 8,192 possible ids per millisecond per shard.
+- shard id: 8 bits gives us 256 possible shards, which represent unique database instances, web server instances, etc.
 
 To save space in writing these IDs, your program should convert them to different bases. The following bases need to be supported: 2, 10, 16, 58, and 64.
 
 | Base | Max Value                                                       | Num of Characters | Alphabet                                                                    |
-|------|-----------------------------------------------------------------|-------------------|-----------------------------------------------------------------------------|
+| ---- | --------------------------------------------------------------- | ----------------- | --------------------------------------------------------------------------- |
 | 2    | 111111111111111111111111111111111111111111111111111111111111111 | 63                | 01                                                                          |
 | 10   | 9223372036854775807                                             | 19                | 0123456789                                                                  |
 | 16   | 7fffffffffffffff                                                | 16                | 0123456789ABCDEF                                                            |
 | 58   | NQm6nKp8qFC                                                     | 11                | 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz (not used: 0OIl) |
-| 64   |                                                                 |                   | 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_            |
+| 64   |                                                                 |                   | 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-\_           |
 
     Note that the Base 64 conversion is NOT Base64 encoding. Our algorithm needs to do a math-related number base conversion using the given alphabet.
 
-
 ## Package Directory Structure
 
-Create the following project structure with the names given.  Function names are given within each file:
+Create the following project structure with the names given. Function names are given within each file:
+
 ```
 project/
     uid/
@@ -114,10 +114,13 @@ project/
             # print the statistics to the command line
 ```
 
-
-
 ## Submitting the Assignment
 
 Submit via the Grading Engine. You can submit up to three times; your highest grade will be entered into the gradebook on Learning Suite.
 
 The grading engine will create at least two processes, so be sure to try with different SHARD_ID values.
+
+## Hints
+
+divmod(7, 3) return the times 3 fits, and the remainder
+a single bit shift will multiply the number you have by it's base (in binary it will multiply by 2, 2 bit shifts multiplies by 4, 3 by 8, etc...)
