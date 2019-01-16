@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import base2, base16, base58, base64
+import base2
+import base16
+import base58
+import base64
 
 ##############################################################################################################################################################################
 #  A uid class based on time, counter, and shard id.                                                                                                                         #
@@ -21,9 +24,10 @@ COUNTER_BITS = 13
 SHARD_BITS = 8
 
 # the masks
-MILLIS_MASK =
-COUNTER_MASK =
-SHARD_MASK =
+# TODO fix the bit masks
+MILLIS_MASK = 1111
+COUNTER_MASK = 1111
+SHARD_MASK = 1111
 
 
 LAST_MILLIS = 0
