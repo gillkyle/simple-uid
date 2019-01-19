@@ -124,3 +124,6 @@ The grading engine will create at least two processes, so be sure to try with di
 
 divmod(7, 3) return the times 3 fits, and the remainder
 a single bit shift will multiply the number you have by it's base (in binary it will multiply by 2, 2 bit shifts multiplies by 4, 3 by 8, etc...)
+left pad bits so uid always comes out same size
+print out actual bits and be aware of what is happening
+using a binary or (i << 1) | j can allow you to bit shift a number over so that you can OR a number with it, rather than concatenating string numbers
