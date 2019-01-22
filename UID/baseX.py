@@ -49,6 +49,7 @@ class BaseXConverter(object):
             bXval = self.alphabet[0]
         else:
             bXval = ''
+            # find where the digit is in the given alphabet
             while x > 0:
                 digit = x % len(self.alphabet)
                 bXval = self.alphabet[digit] + bXval
@@ -62,5 +63,23 @@ class BaseXConverter(object):
         The bXval should be a baseX integer, wrapped as a string.
         Raises a ValueError if bXval contains any chars not in the alphabet.
         '''
-        val = 0
+        x = 0
+        for digit in str(bXval):
+            try:
+                x = x * len(self.alphabet) + \
+                    self.alphabet.index(digit)
+            except ValueError:
+                raise ValueError('invalid character in argument')
+
+        # base case, while converting each digit
+        if x == 0:
+            val = self.decimal_digits[0]
+        else:
+            val = ''
+            # find where the digit corresponds to a number
+            while x > 0:
+                digit = x % len(self.decimal_digits)
+                val = self.decimal_digits[digit] + val
+                x = int(x // len(self.decimal_digits))
+        print(val)
         return val

@@ -16,13 +16,10 @@ class BaseXTester(TestCase):
         # python has built in binary conversion with {:0b}, compare against our converter
         # test against python's builtin
         self.assertEqual(conv.convert(i), '{:0b}'.format(i))
-        # self.assertEqual(i, conv.invert(conv.convert(i)))
+        self.assertEqual(str(i), conv.invert(conv.convert(i)))
 
     def test_base10(self):
         conv = BaseXConverter('0123456789')
         i = 32
-        # 10110100001100011111001110100011001101111000000000111100000010
-        # python has built in binary conversion with {:0b}, compare against our converter
-        # test against python's builtin
         self.assertEqual(conv.convert(i), '32')
-        # self.assertEqual(i, conv.invert(conv.convert(i)))
+        self.assertEqual(str(i), conv.invert(conv.convert(i)))
