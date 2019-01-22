@@ -21,17 +21,39 @@ class BaseXConverter(object):
         '''
         The base is taken from the number of characters in the alphabet.
         '''
+        self.decimal_digits = '0123456789'
         self.alphabet = list(alphabet)
         self.base = len(alphabet)
+        # 10110100001100011110001011100110011010110000000000111100000010
         # to come backwards and invert, you'll need a symbol for the value 13 for instance
         self.alphabet_index = {}
 
     def convert(self, val):
         '''
         Converts value from base 10 to base X.
+        Base 10 --> 15
+        Base 2  --> 1111
         The return value is a baseX integer, wrapped as a string.
         '''
-        bXval = 0
+        x = 0
+        # iterate through letters in alphabet
+        for digit in str(val):
+            try:
+                x = x * len(self.decimal_digits) + \
+                    self.decimal_digits.index(digit)
+            except ValueError:
+                raise ValueError('invalid character in argument')
+
+        # base case, while converting each digit
+        if x == 0:
+            bXval = self.alphabet[0]
+        else:
+            bXval = ''
+            while x > 0:
+                digit = x % len(self.alphabet)
+                bXval = self.alphabet[digit] + bXval
+                x = int(x // len(self.alphabet))
+        print(bXval)
         return bXval
 
     def invert(self, bXval):

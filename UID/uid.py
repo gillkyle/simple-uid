@@ -27,9 +27,9 @@ SHARD_BITS = 8
 
 # the masks
 # TODO fix the bit masks
-MILLIS_MASK = ((2 ** MILLIS_BITS) - 1) << (COUNTER_BITS + SHARD_BITS)
-COUNTER_MASK = ((2 ** COUNTER_BITS) - 1) << SHARD_BITS
-SHARD_MASK = ((2 ** SHARD_BITS) - 1)
+MILLIS_MASK = (2 ** MILLIS_BITS - 1) << (COUNTER_BITS + SHARD_BITS)
+COUNTER_MASK = (2 ** COUNTER_BITS - 1) << (SHARD_BITS)
+SHARD_MASK = (2 ** SHARD_BITS - 1)
 
 
 LAST_MILLIS = 0
@@ -64,7 +64,7 @@ def generate(base=10):
 
 def pack(millis, counter, shard):
     '''Combines the three items into a single uid number'''
-    uid = (millis << MILLIS_BITS)
+    uid = (((millis << COUNTER_BITS) + counter) << SHARD_BITS) + shard
 
     return uid
 
