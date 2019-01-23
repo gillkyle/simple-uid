@@ -54,7 +54,6 @@ class BaseXConverter(object):
                 digit = x % len(self.alphabet)
                 bXval = self.alphabet[digit] + bXval
                 x = int(x // len(self.alphabet))
-        print(bXval)
         return bXval
 
     def invert(self, bXval):
@@ -81,5 +80,4 @@ class BaseXConverter(object):
                 digit = x % len(self.decimal_digits)
                 val = self.decimal_digits[digit] + val
                 x = int(x // len(self.decimal_digits))
-        print(val)
         return val

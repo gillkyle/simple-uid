@@ -13,7 +13,12 @@ from uid import generate
 
 
 def main():
-    print('do something here')
+    for i in range(10000):
+        generate()
+        generate(2)
+        generate(16)
+        generate(58)
+        generate(64)
 
 
 # start things up!
