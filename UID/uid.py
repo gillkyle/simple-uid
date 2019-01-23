@@ -81,9 +81,42 @@ def pack(millis, counter, shard):
 
 def unpack(uid):
     '''Separates the uid into its three parts'''
-
     # TODO this shouldn't use array ranges, you can use masks
-    millis = uid[MILLIS_BITS:]
-    counter = uid[MILLIS_BITS:COUNTER_BITS]
-    shard = uid[:SHARD_BITS]
+    uid_length = len(uid)
+    if (uid_length >= 62):
+        base = 2
+    elif (uid_length == 19):
+        base = 10
+    elif (uid_length == 16):
+        base = 16
+    elif (uid_length == 11):
+        if any(x in "0OIl" for x in uid):
+            base = 64
+        else:
+            base = 58
+    else:
+        base = 10
+
+    if (base == 10):
+        inverted_uid = uid
+    elif (base == 2):
+        inverted_uid = base2.invert(uid)
+    elif (base == 16):
+        inverted_uid = base16.invert(uid)
+    elif (base == 58):
+        inverted_uid = base58.invert(uid)
+    elif (base == 64):
+        inverted_uid = base64.invert(uid)
+    else:
+        inverted_uid = uid
+
+    print("---inverted---")
+    print(inverted_uid)
+    millis = int(inverted_uid) & MILLIS_MASK
+    counter = int(inverted_uid) & COUNTER_MASK
+    print(bin(counter))
+    shard = int(inverted_uid) & SHARD_MASK
+    print(bin(shard))
+    print(millis, counter, shard)
+
     return (millis, counter, shard)
