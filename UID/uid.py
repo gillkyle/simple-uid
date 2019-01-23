@@ -44,19 +44,10 @@ def generate(base=10):
     global LAST_MILLIS
     global COUNTER
 
-    while True:
-        millis = int((datetime.utcnow() - EPOCH).total_seconds() * 1000)
-        # if the counter has exceeded greatest possible size or we are at a new millisecond break the loop
-        if COUNTER > MAX_COUNTER or LAST_MILLIS != millis:
-            break
-        # wait until next millisecond to start generating again
-        # time.sleep(.001)
+    millis = int((datetime.utcnow() - EPOCH).total_seconds() * 1000)
 
     # reset the counter if we are in a new millisecond
     COUNTER += 1
-    print(COUNTER)
-    print(LAST_MILLIS)
-    print(millis)
 
     if LAST_MILLIS != millis:
         COUNTER = 0
