@@ -70,7 +70,7 @@ def generate(base=10):
     else:
         converted_uid = uid
     print(converted_uid)
-    return converted_uid
+    return str(converted_uid)
 
 
 def pack(millis, counter, shard):
@@ -82,7 +82,7 @@ def pack(millis, counter, shard):
 def unpack(uid):
     '''Separates the uid into its three parts'''
     # TODO this shouldn't use array ranges, you can use masks
-    uid_length = len(uid)
+    uid_length = len(str(uid))
     if (uid_length >= 62):
         base = 2
     elif (uid_length == 19):
@@ -110,13 +110,9 @@ def unpack(uid):
     else:
         inverted_uid = uid
 
-    print("---inverted---")
-    print(inverted_uid)
     millis = int(inverted_uid) & MILLIS_MASK
-    counter = int(inverted_uid) & COUNTER_MASK
-    print(bin(counter))
+    counter = (int(inverted_uid) & COUNTER_MASK) >> SHARD_BITS
     shard = int(inverted_uid) & SHARD_MASK
-    print(bin(shard))
     print(millis, counter, shard)
 
     return (millis, counter, shard)
